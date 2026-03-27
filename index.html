@@ -289,7 +289,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 2rem;
+            gap: 2.8rem;
             margin-top: 2.5rem;
             position: relative;
             z-index: 2;
@@ -298,205 +298,270 @@
             animation: fadeUp 1s ease 2.8s forwards;
         }
 
-        /* Warm floor glow beneath candles */
+        /* Warm pooled light on the ground */
         .candle-row::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 220px;
-            height: 30px;
-            background: radial-gradient(ellipse at 50% 100%, rgba(210,130,20,0.35) 0%, rgba(180,60,10,0.1) 55%, transparent 100%);
-            filter: blur(6px);
+            width: 280px;
+            height: 40px;
+            background: radial-gradient(ellipse at 50% 100%, rgba(220,140,20,0.45) 0%, rgba(190,70,10,0.18) 50%, transparent 100%);
+            filter: blur(10px);
             border-radius: 50%;
+            animation: groundBreath 3s ease-in-out infinite alternate;
         }
 
+        /* Each candle gently sways on its own rhythm */
         .candle {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             flex-shrink: 0;
+            transform-origin: bottom center;
+            animation: candleSway var(--sway, 4s) ease-in-out infinite alternate;
         }
 
-        /* Flame container keeps glow + flame stacked */
+        @keyframes candleSway {
+            from { transform: rotate(var(--rot-a, -1.4deg)); }
+            to   { transform: rotate(var(--rot-b,  1.4deg)); }
+        }
+
+        /* Flame + aura container */
         .candle-flame-wrap {
             position: relative;
-            width: 32px;
-            height: 40px;
+            width: 52px;
+            height: 60px;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: -3px;
+            margin-bottom: -4px;
         }
 
-        /* Outer ambient glow on the air */
+        /* Wide pulsing ambient aura */
         .candle-aura {
             position: absolute;
-            bottom: -6px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 52px;
-            height: 52px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,170,30,0.55) 0%, rgba(200,80,10,0.2) 45%, transparent 72%);
+            background: radial-gradient(circle, rgba(255,165,20,0.65) 0%, rgba(210,80,8,0.28) 42%, transparent 70%);
+            filter: blur(7px);
             animation: auraPulse var(--dur, 1.9s) ease-in-out infinite alternate;
-            filter: blur(3px);
         }
 
-        /* Main flame body */
+        /* Outer flame — large, amber-orange, dramatically animated */
         .candle-flame {
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%) scaleX(1) scaleY(1);
-            width: 13px;
-            height: 30px;
+            width: 20px;
+            height: 46px;
             background: radial-gradient(
-                ellipse at 50% 85%,
-                #fff8c0 0%,
-                #ffd040 22%,
-                #ff8f10 55%,
-                #cc3a0a 82%,
+                ellipse at 50% 84%,
+                #fff9d0 0%,
+                #ffe048 16%,
+                #ff9010 46%,
+                #d63808 76%,
                 transparent 100%
             );
-            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
-            filter: blur(0.6px);
-            animation: flicker var(--dur, 1.9s) ease-in-out infinite alternate;
+            border-radius: 50% 50% 36% 36% / 62% 62% 38% 38%;
+            filter: blur(0.7px);
+            transform: translateX(-50%);
             transform-origin: bottom center;
+            animation: flicker var(--dur, 1.9s) ease-in-out infinite alternate;
         }
 
-        /* Bright inner core */
+        /* Mid flame — warm yellow layer */
+        .candle-flame::before {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 11px;
+            height: 28px;
+            background: radial-gradient(
+                ellipse at 50% 84%,
+                #ffffff 0%,
+                #fff8a0 30%,
+                #ffcc30 65%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 40% 40%;
+            filter: blur(1.2px);
+        }
+
+        /* Bright white core tip */
         .candle-flame::after {
             content: '';
             position: absolute;
-            bottom: 5px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 5px;
-            height: 13px;
-            background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #fffac0 50%, transparent 100%);
+            width: 6px;
+            height: 10px;
+            background: radial-gradient(ellipse, #ffffff 0%, rgba(255,255,200,0.7) 60%, transparent 100%);
             border-radius: 50%;
-            filter: blur(0.8px);
+            filter: blur(0.5px);
         }
 
-        /* Light cast on wax top */
+        /* Smoke wisp rising from flame */
+        .candle-smoke {
+            position: absolute;
+            bottom: calc(100% - 4px);
+            left: 50%;
+            width: 5px;
+            height: 45px;
+            background: linear-gradient(to top, rgba(190,170,130,0.38), transparent);
+            border-radius: 50%;
+            filter: blur(3.5px);
+            transform-origin: bottom center;
+            animation: smokeRise calc(var(--dur, 1.9s) * 2) ease-out infinite;
+        }
+
+        @keyframes smokeRise {
+            0%   { transform: translateX(-50%) translateY(0)     scaleX(1)    skewX(0deg);  opacity: 0.5; }
+            35%  { transform: translateX(-44%) translateY(-14px) scaleX(1.8)  skewX(7deg);  opacity: 0.3; }
+            70%  { transform: translateX(-57%) translateY(-30px) scaleX(2.8)  skewX(-5deg); opacity: 0.12; }
+            100% { transform: translateX(-50%) translateY(-48px) scaleX(3.6)  skewX(3deg);  opacity: 0; }
+        }
+
+        /* Warm light cast on wax top */
         .candle-top-glow {
-            width: calc(var(--cw, 18px) + 4px);
-            height: 5px;
-            background: radial-gradient(ellipse at 50% 0%, rgba(255,200,60,0.55) 0%, transparent 100%);
+            width: calc(var(--cw, 22px) + 8px);
+            height: 7px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,215,70,0.7) 0%, transparent 100%);
             border-radius: 50%;
             margin-bottom: 1px;
+            animation: topGlowPulse var(--dur, 1.9s) ease-in-out infinite alternate;
         }
 
+        @keyframes topGlowPulse {
+            from { opacity: 0.6; }
+            to   { opacity: 1; }
+        }
+
+        /* Wick */
         .candle-wick {
-            width: 1.5px;
-            height: 7px;
-            background: linear-gradient(to bottom, #c0a030, #1a0e04);
+            width: 2px;
+            height: 9px;
+            background: linear-gradient(to bottom, #d0a828, #160900);
             border-radius: 1px;
             z-index: 2;
             position: relative;
             margin-bottom: -1px;
         }
 
+        /* Glowing ember at wick tip */
         .candle-wick::before {
             content: '';
             position: absolute;
-            top: -1px;
+            top: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, #ff9020, #ff4400 60%, transparent);
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #ffcc20 0%, #ff5500 55%, transparent 100%);
             border-radius: 50%;
-            filter: blur(1px);
+            filter: blur(1.5px);
+            animation: wickGlow var(--dur, 1.9s) ease-in-out infinite alternate;
         }
 
+        @keyframes wickGlow {
+            from { opacity: 0.65; transform: translateX(-50%) scale(1); }
+            to   { opacity: 1;    transform: translateX(-50%) scale(1.5); }
+        }
+
+        /* 3D cylindrical wax body */
         .candle-body {
-            width: var(--cw, 18px);
-            height: var(--ch, 80px);
-            border-radius: 1.5px 1.5px 3px 3px;
+            width: var(--cw, 22px);
+            height: var(--ch, 100px);
+            border-radius: 2px 2px 4px 4px;
             position: relative;
             overflow: visible;
             background: linear-gradient(
                 to right,
-                #b8a070 0%,
-                #dcc888 18%,
-                #f0e0a8 40%,
-                #f8eeb8 50%,
-                #f0e0a8 60%,
-                #dcc888 82%,
-                #b8a070 100%
+                #7a6038 0%,
+                #b89050 10%,
+                #dcc878 24%,
+                #f5eebc 42%,
+                #fdf8d4 50%,
+                #f5eebc 58%,
+                #dcc878 76%,
+                #b89050 90%,
+                #7a6038 100%
             );
+            box-shadow:
+                inset -6px 0 12px rgba(0,0,0,0.28),
+                inset  5px 0 10px rgba(255,245,170,0.22),
+                3px 8px 20px rgba(0,0,0,0.6),
+                -2px 4px 12px rgba(0,0,0,0.35),
+                0 0 28px rgba(210,150,20,0.14);
         }
 
-        /* Shadow/shading on wax */
+        /* Bright highlight streak — sells the cylinder */
         .candle-body::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 18%;
-            width: 14%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(255,220,120,0.35), rgba(255,180,60,0.1) 60%, transparent);
+            top: 4px;
+            left: 15%;
+            width: 9%;
+            height: 80%;
+            background: linear-gradient(to bottom,
+                rgba(255,248,200,0.65),
+                rgba(255,220,120,0.18) 65%,
+                transparent);
             border-radius: 50%;
+            filter: blur(1.5px);
         }
 
-        /* Wax drip — cream colored */
+        /* Wax drip — cream tone */
         .candle-body::after {
             content: '';
             position: absolute;
             top: 0;
             left: var(--drip-l, 60%);
-            width: 5px;
-            height: var(--drip-h, 18px);
-            background: linear-gradient(to bottom, #f0dea0, #d8c080);
-            border-radius: 0 0 60% 60%;
-            opacity: 0.85;
+            width: 6px;
+            height: var(--drip-h, 22px);
+            background: linear-gradient(to bottom, #faf0c0, #e0d090);
+            border-radius: 0 0 65% 65%;
+            opacity: 0.9;
         }
 
+        /* Candle holder / base */
         .candle-base {
-            width: calc(var(--cw, 18px) + 10px);
-            height: 7px;
-            background: linear-gradient(to right, #5a4828, #8a7040 30%, #a08858 50%, #8a7040 70%, #5a4828);
-            border-radius: 1px 1px 4px 4px;
-        }
-
-        /* Ground glow beneath the whole row */
-        .candle-ground-glow {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 60px;
-            background: radial-gradient(ellipse at 50% 100%, rgba(200,120,20,0.22) 0%, rgba(180,60,10,0.08) 50%, transparent 100%);
-            filter: blur(8px);
-            pointer-events: none;
-            animation: groundBreath 3.5s ease-in-out infinite alternate;
-            opacity: 0;
-            animation: fadeUp 1s ease 2.8s forwards, groundBreath 3.5s ease-in-out 3.8s infinite alternate;
+            width: calc(var(--cw, 22px) + 14px);
+            height: 9px;
+            background: linear-gradient(to right, #3a2c14, #6e5428 28%, #8a6c38 50%, #6e5428 72%, #3a2c14);
+            border-radius: 2px 2px 6px 6px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.6), 0 0 12px rgba(180,120,10,0.15);
         }
 
         @keyframes flicker {
-            0%   { transform: translateX(-50%) scaleX(1)    scaleY(1)    rotate(0deg)  skewX(0deg);   opacity: 1; }
-            12%  { transform: translateX(-44%) scaleX(0.82) scaleY(1.10) rotate(-5deg) skewX(-4deg);  opacity: 0.9; }
-            28%  { transform: translateX(-56%) scaleX(1.12) scaleY(0.94) rotate(4deg)  skewX(3deg);   opacity: 0.97; }
-            44%  { transform: translateX(-47%) scaleX(0.88) scaleY(1.07) rotate(-3deg) skewX(-2deg);  opacity: 1; }
-            60%  { transform: translateX(-54%) scaleX(1.09) scaleY(0.96) rotate(5deg)  skewX(4deg);   opacity: 0.87; }
-            76%  { transform: translateX(-46%) scaleX(0.86) scaleY(1.08) rotate(-4deg) skewX(-3deg);  opacity: 0.95; }
-            100% { transform: translateX(-50%) scaleX(1.05) scaleY(0.93) rotate(2deg)  skewX(1deg);   opacity: 0.91; }
+            0%   { transform: translateX(-50%) rotate(0deg)   skewX(0deg)  scaleX(1)    scaleY(1);    filter: blur(0.7px); }
+            8%   { transform: translateX(-43%) rotate(-8deg)  skewX(-6deg) scaleX(0.78) scaleY(1.14); filter: blur(0.4px); }
+            18%  { transform: translateX(-58%) rotate( 7deg)  skewX( 5deg) scaleX(1.16) scaleY(0.90); filter: blur(1.1px); }
+            30%  { transform: translateX(-42%) rotate(-10deg) skewX(-8deg) scaleX(0.75) scaleY(1.18); filter: blur(0.5px); }
+            42%  { transform: translateX(-57%) rotate(  8deg) skewX( 6deg) scaleX(1.14) scaleY(0.87); filter: blur(1.0px); }
+            55%  { transform: translateX(-50%) rotate( -1deg) skewX(-1deg) scaleX(1)    scaleY(1.02); filter: blur(0.7px); }
+            67%  { transform: translateX(-44%) rotate( -7deg) skewX(-5deg) scaleX(0.82) scaleY(1.12); filter: blur(0.4px); }
+            80%  { transform: translateX(-56%) rotate(  9deg) skewX( 7deg) scaleX(1.13) scaleY(0.89); filter: blur(1.1px); }
+            100% { transform: translateX(-50%) rotate(  2deg) skewX( 1deg) scaleX(1.06) scaleY(0.95); filter: blur(0.8px); }
         }
 
         @keyframes auraPulse {
-            from { opacity: 0.55; transform: translateX(-50%) scale(1);    }
-            to   { opacity: 0.85; transform: translateX(-50%) scale(1.22); }
+            from { opacity: 0.5;  transform: translateX(-50%) scale(1);    }
+            to   { opacity: 0.92; transform: translateX(-50%) scale(1.35); }
         }
 
         @keyframes groundBreath {
-            from { opacity: 0.6; }
-            to   { opacity: 1;   }
+            from { opacity: 0.55; }
+            to   { opacity: 1; }
         }
 
         /* ============================================================
@@ -659,16 +724,7 @@
             animation: heroBreathe 12s ease-in-out infinite alternate;
         }
 
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('logo.jpg') center center / contain no-repeat;
-            opacity: 0.12;
-            filter: blur(1px) saturate(0.6);
-        }
-
-        @keyframes heroBreathe {
+@keyframes heroBreathe {
             from { opacity: 0.7; }
             to   { opacity: 1; }
         }
@@ -1302,27 +1358,39 @@
         <!-- Candle cluster below enter button -->
         <div class="candle-row" aria-hidden="true">
 
-            <!-- Left — shorter -->
-            <div class="candle" style="--cw:18px;--ch:75px;--dur:2.3s;--drip-l:62%;--drip-h:20px;">
-                <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <!-- Left — shorter, leans left -->
+            <div class="candle" style="--cw:20px;--ch:82px;--dur:2.4s;--drip-l:60%;--drip-h:22px;--sway:5.1s;--rot-a:-1.8deg;--rot-b:0.6deg;">
+                <div class="candle-flame-wrap">
+                    <div class="candle-smoke"></div>
+                    <div class="candle-aura"></div>
+                    <div class="candle-flame"></div>
+                </div>
                 <div class="candle-top-glow"></div>
                 <div class="candle-wick"></div>
                 <div class="candle-body"></div>
                 <div class="candle-base"></div>
             </div>
 
-            <!-- Center — tallest, focal point -->
-            <div class="candle" style="--cw:24px;--ch:120px;--dur:1.9s;--drip-l:38%;--drip-h:30px;">
-                <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <!-- Center — tallest, focal point, slight sway -->
+            <div class="candle" style="--cw:28px;--ch:140px;--dur:1.8s;--drip-l:36%;--drip-h:34px;--sway:4.3s;--rot-a:-1.0deg;--rot-b:1.0deg;">
+                <div class="candle-flame-wrap">
+                    <div class="candle-smoke"></div>
+                    <div class="candle-aura"></div>
+                    <div class="candle-flame"></div>
+                </div>
                 <div class="candle-top-glow"></div>
                 <div class="candle-wick"></div>
                 <div class="candle-body"></div>
                 <div class="candle-base"></div>
             </div>
 
-            <!-- Right — medium -->
-            <div class="candle" style="--cw:20px;--ch:95px;--dur:2.1s;--drip-l:55%;--drip-h:22px;">
-                <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <!-- Right — medium, leans right -->
+            <div class="candle" style="--cw:22px;--ch:108px;--dur:2.1s;--drip-l:54%;--drip-h:26px;--sway:4.8s;--rot-a:-0.5deg;--rot-b:2.0deg;">
+                <div class="candle-flame-wrap">
+                    <div class="candle-smoke"></div>
+                    <div class="candle-aura"></div>
+                    <div class="candle-flame"></div>
+                </div>
                 <div class="candle-top-glow"></div>
                 <div class="candle-wick"></div>
                 <div class="candle-body"></div>
