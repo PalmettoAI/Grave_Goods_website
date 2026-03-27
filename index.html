@@ -659,6 +659,15 @@
             animation: heroBreathe 12s ease-in-out infinite alternate;
         }
 
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('logo.jpg') center center / contain no-repeat;
+            opacity: 0.12;
+            filter: blur(1px) saturate(0.6);
+        }
+
         @keyframes heroBreathe {
             from { opacity: 0.7; }
             to   { opacity: 1; }
