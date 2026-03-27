@@ -107,16 +107,30 @@
             pointer-events: none;
         }
 
-        /* ── Candles anchored to bottom of screen ── */
+        /* ── Candles — background layer, behind logo ── */
         .entry-candles {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 12;
+            z-index: 2;
             pointer-events: none;
             opacity: 0;
             animation: candlesIn 1s ease 3.2s forwards;
+        }
+
+        .entry-candles img {
+            width: 100%;
+            max-width: none;
+            display: block;
+            margin: 0 auto;
+            mix-blend-mode: screen;
+            object-fit: cover;
+            object-position: center bottom;
+            opacity: 0.75;
+            filter: brightness(1.2) saturate(1.3);
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 35%, rgba(0,0,0,0.4) 65%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 35%, rgba(0,0,0,0.4) 65%, transparent 100%);
         }
 
         @keyframes candlesIn {
@@ -952,14 +966,15 @@
         }
 
         .h-logo img {
-            height: 108px;
+            height: 200px;
             width: auto;
-            filter: drop-shadow(0 0 8px rgba(200,159,60,0.2));
+            mix-blend-mode: lighten;
+            filter: drop-shadow(0 0 18px rgba(200,159,60,0.45));
             transition: filter 0.4s ease, transform 0.4s ease;
         }
 
         .h-logo:hover img {
-            filter: drop-shadow(0 0 18px rgba(200,159,60,0.5));
+            filter: drop-shadow(0 0 32px rgba(200,159,60,0.7));
             transform: scale(1.03);
         }
 
@@ -1474,10 +1489,12 @@
         }
 
         .footer-logo img {
-            height: 78px;
+            height: 220px;
             width: auto;
             margin-bottom: 1.25rem;
-            opacity: 0.8;
+            mix-blend-mode: lighten;
+            filter: drop-shadow(0 0 24px rgba(200,159,60,0.4));
+            opacity: 1;
         }
 
         .footer-tagline {
@@ -1660,111 +1677,9 @@
         </div>
     </div>
 
-    <!-- Altar candles — 8 typed variants spread across full width -->
+    <!-- Altar candles — animated GIF, blended -->
     <div class="entry-candles" aria-hidden="true">
-        <div class="candle-row">
-
-            <!-- 1: Classic Ivory -->
-            <div class="ec-wrap" style="--sway:5.8s;--rot-a:-2.4deg;--rot-b:-0.2deg;">
-                <div class="c1-scene">
-                    <div class="c1-glow"></div>
-                    <div class="c1-flame"><div class="c1-flame-outer"></div><div class="c1-flame-inner"></div></div>
-                    <div class="c1-wick"></div>
-                    <div class="c1-body">
-                        <div class="c1-drip" style="left:5px;top:3px;animation-delay:0s"></div>
-                        <div class="c1-drip" style="right:7px;top:1px;animation-delay:1.5s"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2: Gothic Black -->
-            <div class="ec-wrap" style="--sway:4.9s;--rot-a:-1.8deg;--rot-b:0.6deg;">
-                <div class="c2-scene">
-                    <div class="c2-glow"></div>
-                    <div class="c2-flame"><div class="c2-flame-outer"></div><div class="c2-flame-inner"></div></div>
-                    <div class="c2-wick"></div>
-                    <div class="c2-body"></div>
-                </div>
-            </div>
-
-            <!-- 3: Melted Red -->
-            <div class="ec-wrap" style="--sway:5.3s;--rot-a:-1.2deg;--rot-b:0.9deg;">
-                <div class="c3-scene">
-                    <div class="c3-glow"></div>
-                    <div class="c3-flame"><div class="c3-flame-outer"></div><div class="c3-flame-inner"></div></div>
-                    <div class="c3-wick"></div>
-                    <div class="c3-body">
-                        <div class="c3-drip" style="left:3px;top:0;animation:drip 2.6s ease-in infinite;animation-delay:0s"></div>
-                        <div class="c3-drip" style="left:18px;top:0;animation:drip 3.2s ease-in infinite;animation-delay:0.8s"></div>
-                        <div class="c3-drip" style="right:3px;top:0;animation:drip 2.9s ease-in infinite;animation-delay:0.3s"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4: Triple Wick -->
-            <div class="ec-wrap" style="--sway:4.4s;--rot-a:-0.8deg;--rot-b:1.0deg;">
-                <div class="c4-scene">
-                    <div class="c4-flames">
-                        <div class="c4-fl"><div class="c4-fl-o"></div><div class="c4-fl-i"></div></div>
-                        <div class="c4-fl"><div class="c4-fl-o"></div><div class="c4-fl-i"></div></div>
-                        <div class="c4-fl"><div class="c4-fl-o"></div><div class="c4-fl-i"></div></div>
-                    </div>
-                    <div class="c4-wicks">
-                        <div class="c4-wk"></div><div class="c4-wk"></div><div class="c4-wk"></div>
-                    </div>
-                    <div class="c4-body"></div>
-                </div>
-            </div>
-
-            <!-- 5: Slim Gold Taper -->
-            <div class="ec-wrap" style="--sway:6.1s;--rot-a:-0.4deg;--rot-b:1.4deg;">
-                <div class="c5-scene">
-                    <div class="c5-glow"></div>
-                    <div class="c5-flame"><div class="c5-flame-outer"></div><div class="c5-flame-inner"></div></div>
-                    <div class="c5-wick"></div>
-                    <div class="c5-body"></div>
-                </div>
-            </div>
-
-            <!-- 6: Wide Pillar Heavy Drip -->
-            <div class="ec-wrap" style="--sway:4.7s;--rot-a:0.2deg;--rot-b:1.6deg;">
-                <div class="c6-scene">
-                    <div class="c6-glow"></div>
-                    <div class="c6-flame"><div class="c6-flame-outer"></div><div class="c6-flame-inner"></div></div>
-                    <div class="c6-wick"></div>
-                    <div class="c6-body">
-                        <div class="c6-drip" style="width:12px;left:2px;top:0;animation:drip 2.2s ease-in infinite;animation-delay:0s"></div>
-                        <div class="c6-drip" style="width:9px;left:20px;top:0;animation:drip 3.5s ease-in infinite;animation-delay:1s"></div>
-                        <div class="c6-drip" style="width:14px;right:0;top:0;animation:drip 2.8s ease-in infinite;animation-delay:0.4s"></div>
-                        <div class="c6-drip" style="width:7px;left:34px;top:0;animation:drip 4s ease-in infinite;animation-delay:2s"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7: Ghost Blue -->
-            <div class="ec-wrap" style="--sway:5.5s;--rot-a:0.6deg;--rot-b:2.0deg;">
-                <div class="c7-scene">
-                    <div class="c7-glow"></div>
-                    <div class="c7-flame"><div class="c7-flame-outer"></div><div class="c7-flame-inner"></div></div>
-                    <div class="c7-wick"></div>
-                    <div class="c7-body"></div>
-                </div>
-            </div>
-
-            <!-- 8: Witchy Green -->
-            <div class="ec-wrap" style="--sway:5.0s;--rot-a:1.0deg;--rot-b:2.6deg;">
-                <div class="c8-scene">
-                    <div class="c8-glow"></div>
-                    <div class="c8-flame"><div class="c8-flame-outer"></div><div class="c8-flame-inner"></div></div>
-                    <div class="c8-wick"></div>
-                    <div class="c8-body">
-                        <div class="c8-drip" style="left:4px;top:0;animation-delay:0.5s"></div>
-                        <div class="c8-drip" style="right:5px;top:0;animation-delay:2s"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <img src="candles.gif" alt="">
     </div>
 </div>
 
