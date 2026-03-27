@@ -966,7 +966,7 @@
         }
 
         .h-logo img {
-            height: 200px;
+            height: clamp(80px, 14vw, 200px);
             width: auto;
             mix-blend-mode: lighten;
             filter: drop-shadow(0 0 18px rgba(200,159,60,0.45));
@@ -1489,7 +1489,7 @@
         }
 
         .footer-logo img {
-            height: 220px;
+            height: clamp(120px, 18vw, 220px);
             width: auto;
             margin-bottom: 1.25rem;
             mix-blend-mode: lighten;
@@ -1597,18 +1597,58 @@
             .h-nav a:not(.cart-link) { display: none; }
         }
 
+        /* ── Tablet ── */
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 4rem 1.5rem; }
+            .section { padding: 4rem 1.5rem; }
+        }
+
+        /* ── Mobile ── */
         @media (max-width: 600px) {
             :root { --vine-w: 0px; }
             .vine { display: none; }
-            .product-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
-            .cat-grid { grid-template-columns: 1fr; }
+
+            /* Entry splash */
+            .entry-logo { width: min(340px, 90vw) !important; }
+            .entry-tagline { font-size: clamp(0.78rem, 3.5vw, 0.92rem); max-width: 34ch; }
+            .enter-eyebrow { font-size: 0.52rem; letter-spacing: 0.3em; }
+            .enter-btn { font-size: 0.65rem; padding: 0.9rem 3rem; letter-spacing: 0.32em; }
+            .entry-inner { gap: 1rem; transform: translateY(-4vh); }
+            .entry-arch { width: min(520px, 98vw); }
+
+            /* Header */
+            .site-header { grid-template-columns: 1fr auto; padding: 0.5rem 1rem; }
+            .h-nav.left { display: none; }
+
+            /* Sections */
+            .hero { padding: 3rem 1rem; min-height: 70vh; }
+            .hero-title { font-size: clamp(1.6rem, 8vw, 2.8rem); }
+            .hero-title em { font-size: clamp(1.4rem, 7vw, 2.4rem); }
+            .hero-body { font-size: 1rem; }
+            .section { padding: 3rem 1rem; }
+            .section-title { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+
+            /* Grids */
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .cat-grid { grid-template-columns: 1fr 1fr; }
+
+            /* Footer */
             .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
             .nl-form { flex-direction: column; }
             .nl-form input { border-right: 1px solid var(--border-gold); border-bottom: none; }
             .nl-form button { padding: 1rem; }
-            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-            .site-header { grid-template-columns: 1fr auto; }
-            .h-nav.left { display: none; }
+        }
+
+        /* ── Small phones ── */
+        @media (max-width: 400px) {
+            .product-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+            .cat-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: clamp(1.4rem, 9vw, 2rem); }
+            .enter-btn { padding: 0.8rem 2.2rem; }
         }
     </style>
 </head>
