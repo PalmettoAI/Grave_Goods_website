@@ -283,6 +283,212 @@
         }
 
         /* ============================================================
+           CANDLE ROW — Entry screen bottom
+        ============================================================ */
+        .candle-row {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: clamp(1.2rem, 3vw, 2.8rem);
+            padding: 0 clamp(1rem, 5vw, 4rem);
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.8s forwards;
+        }
+
+        .candle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        /* Flame container keeps glow + flame stacked */
+        .candle-flame-wrap {
+            position: relative;
+            width: 32px;
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin-bottom: -3px;
+        }
+
+        /* Outer ambient glow on the air */
+        .candle-aura {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,170,30,0.55) 0%, rgba(200,80,10,0.2) 45%, transparent 72%);
+            animation: auraPulse var(--dur, 1.9s) ease-in-out infinite alternate;
+            filter: blur(3px);
+        }
+
+        /* Main flame body */
+        .candle-flame {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(1) scaleY(1);
+            width: 13px;
+            height: 30px;
+            background: radial-gradient(
+                ellipse at 50% 85%,
+                #fff8c0 0%,
+                #ffd040 22%,
+                #ff8f10 55%,
+                #cc3a0a 82%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+            filter: blur(0.6px);
+            animation: flicker var(--dur, 1.9s) ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        /* Bright inner core */
+        .candle-flame::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 13px;
+            background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #fffac0 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(0.8px);
+        }
+
+        /* Light cast on wax top */
+        .candle-top-glow {
+            width: calc(var(--cw, 18px) + 4px);
+            height: 5px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,200,60,0.55) 0%, transparent 100%);
+            border-radius: 50%;
+            margin-bottom: 1px;
+        }
+
+        .candle-wick {
+            width: 1.5px;
+            height: 7px;
+            background: linear-gradient(to bottom, #c0a030, #1a0e04);
+            border-radius: 1px;
+            z-index: 2;
+            position: relative;
+            margin-bottom: -1px;
+        }
+
+        .candle-wick::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff9020, #ff4400 60%, transparent);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        .candle-body {
+            width: var(--cw, 18px);
+            height: var(--ch, 80px);
+            border-radius: 1.5px 1.5px 3px 3px;
+            position: relative;
+            overflow: visible;
+            background: linear-gradient(
+                to right,
+                #1a1108 0%,
+                #3b2710 18%,
+                #5c3d1c 40%,
+                #6a461f 50%,
+                #5c3d1c 60%,
+                #3b2710 82%,
+                #1a1108 100%
+            );
+        }
+
+        /* Highlight streak */
+        .candle-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 22%;
+            width: 12%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,200,80,0.12), transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* Wax drip */
+        .candle-body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: var(--drip-l, 60%);
+            width: 4px;
+            height: var(--drip-h, 18px);
+            background: linear-gradient(to bottom, #7a5228, #4a2e10);
+            border-radius: 0 0 50% 50%;
+            opacity: 0.7;
+        }
+
+        .candle-base {
+            width: calc(var(--cw, 18px) + 10px);
+            height: 7px;
+            background: linear-gradient(to right, #0e0b06, #2e1e0c 30%, #3a2510 50%, #2e1e0c 70%, #0e0b06);
+            border-radius: 1px 1px 4px 4px;
+        }
+
+        /* Ground glow beneath the whole row */
+        .candle-ground-glow {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 60px;
+            background: radial-gradient(ellipse at 50% 100%, rgba(200,120,20,0.22) 0%, rgba(180,60,10,0.08) 50%, transparent 100%);
+            filter: blur(8px);
+            pointer-events: none;
+            animation: groundBreath 3.5s ease-in-out infinite alternate;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.8s forwards, groundBreath 3.5s ease-in-out 3.8s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%   { transform: translateX(-50%) scaleX(1)    scaleY(1)    rotate(0deg);    opacity: 1; }
+            15%  { transform: translateX(-49%) scaleX(0.88) scaleY(1.05) rotate(-2deg);  opacity: 0.93; }
+            30%  { transform: translateX(-51%) scaleX(1.07) scaleY(0.96) rotate(1.5deg); opacity: 0.98; }
+            50%  { transform: translateX(-50%) scaleX(0.94) scaleY(1.03) rotate(-1deg);  opacity: 1; }
+            65%  { transform: translateX(-52%) scaleX(1.05) scaleY(0.98) rotate(2deg);   opacity: 0.9; }
+            80%  { transform: translateX(-49%) scaleX(0.91) scaleY(1.04) rotate(-1.5deg);opacity: 0.96; }
+            100% { transform: translateX(-50%) scaleX(1.04) scaleY(0.94) rotate(1deg);   opacity: 0.88; }
+        }
+
+        @keyframes auraPulse {
+            from { opacity: 0.55; transform: translateX(-50%) scale(1);    }
+            to   { opacity: 0.85; transform: translateX(-50%) scale(1.22); }
+        }
+
+        @keyframes groundBreath {
+            from { opacity: 0.6; }
+            to   { opacity: 1;   }
+        }
+
+        /* ============================================================
            MAIN SITE
         ============================================================ */
         #site {
@@ -407,7 +613,7 @@
         }
 
         .h-logo img {
-            height: 64px;
+            height: 108px;
             width: auto;
             filter: drop-shadow(0 0 8px rgba(200,159,60,0.2));
             transition: filter 0.4s ease, transform 0.4s ease;
@@ -1073,6 +1279,93 @@
             </button>
         </div>
     </div>
+
+    <!-- Candle row along bottom of entry screen -->
+    <div class="candle-ground-glow" aria-hidden="true"></div>
+    <div class="candle-row" aria-hidden="true">
+
+        <!-- Candle 1 — short, narrow -->
+        <div class="candle" style="--cw:13px;--ch:44px;--dur:2.3s;--drip-l:55%;--drip-h:12px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 2 — medium -->
+        <div class="candle" style="--cw:17px;--ch:90px;--dur:1.7s;--drip-l:65%;--drip-h:22px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 3 — tall, wide -->
+        <div class="candle" style="--cw:22px;--ch:130px;--dur:2.0s;--drip-l:40%;--drip-h:30px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 4 — medium-tall -->
+        <div class="candle" style="--cw:18px;--ch:105px;--dur:1.5s;--drip-l:58%;--drip-h:16px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 5 — tallest, center anchor -->
+        <div class="candle" style="--cw:24px;--ch:150px;--dur:2.2s;--drip-l:30%;--drip-h:35px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 6 — medium-tall -->
+        <div class="candle" style="--cw:18px;--ch:100px;--dur:1.8s;--drip-l:62%;--drip-h:20px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 7 — tall -->
+        <div class="candle" style="--cw:20px;--ch:118px;--dur:2.5s;--drip-l:45%;--drip-h:25px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 8 — short -->
+        <div class="candle" style="--cw:14px;--ch:55px;--dur:1.6s;--drip-l:50%;--drip-h:14px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+        <!-- Candle 9 — medium -->
+        <div class="candle" style="--cw:16px;--ch:78px;--dur:2.1s;--drip-l:70%;--drip-h:18px;">
+            <div class="candle-flame-wrap"><div class="candle-aura"></div><div class="candle-flame"></div></div>
+            <div class="candle-top-glow"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+            <div class="candle-base"></div>
+        </div>
+
+    </div>
 </div>
 
 
@@ -1666,8 +1959,7 @@
                     <em>Dark Distinction</em>
                 </h1>
                 <p class="hero-body">
-                    Curated relics, arcane adornments, and singular finds —
-                    for those who collect the extraordinary and dwell in the beautiful dark.
+                    Curated relics, hand-poured candles, arcane adornments, and singular finds — we believe the thin veil between the mundane and the mystical is best navigated by candlelight. Come wander amongst the tombstones with us.
                 </p>
                 <a href="#shop" class="btn btn-outline">Explore the Collection</a>
             </div>
@@ -1840,14 +2132,18 @@
                         Objects with histories we may never fully know.
                     </p>
                     <p>
-                        We believe in the beauty of impermanence, the poetry of the dark, and the strange
+                        We believe in the beauty of impermanence, the depth of the darkness, and the strange
                         power of objects that outlive their owners. Every piece we carry was chosen for its
-                        singular character — its capacity to hold memory, mystery, and meaning.
+                        unique character — it's capacity to hold memory, mystery, and meaning.
                     </p>
                     <p>
                         This is not mass-market inventory. These are <em>artifacts</em>. Curated, considered,
                         and occasionally haunted. When something sells out, it is gone. That is, perhaps,
                         entirely the point.
+                    </p>
+                    <p>
+                        Every item we offer is a 'grave good' — a treasure intended to accompany you through
+                        this life and perhaps into the next.
                     </p>
                     <br>
                     <a href="#" class="btn btn-outline">Read More</a>
