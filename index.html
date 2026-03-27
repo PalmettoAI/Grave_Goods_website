@@ -389,9 +389,10 @@
         ============================================================ */
         .candle-row {
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: flex-end;
-            gap: 2.8rem;
+            width: 100%;
+            padding: 0 2vw;
             position: relative;
             z-index: 2;
             pointer-events: none;
@@ -576,69 +577,110 @@
             to   { opacity: 1;    transform: translateX(-50%) scale(1.5); }
         }
 
-        /* 3D cylindrical wax body */
+        /* 3D Victorian wax body — aged, rough, layered */
         .candle-body {
             width: var(--cw, 22px);
             height: var(--ch, 100px);
-            border-radius: 2px 2px 4px 4px;
+            border-radius: var(--ctop, 3px 2px 4px 3px) 4px 4px;
             position: relative;
             overflow: visible;
             background: linear-gradient(
                 to right,
-                #7a6038 0%,
-                #b89050 10%,
-                #dcc878 24%,
-                #f5eebc 42%,
-                #fdf8d4 50%,
-                #f5eebc 58%,
-                #dcc878 76%,
-                #b89050 90%,
-                #7a6038 100%
+                var(--we, #4e3518)  0%,
+                var(--wm, #8a6228) 12%,
+                var(--wh, #b8922e) 28%,
+                var(--wc, #cca840) 44%,
+                var(--wp, #d4b048) 50%,
+                var(--wc, #cca840) 56%,
+                var(--wh, #b8922e) 72%,
+                var(--wm, #8a6228) 88%,
+                var(--we, #4e3518) 100%
             );
             box-shadow:
-                inset -6px 0 12px rgba(0,0,0,0.28),
-                inset  5px 0 10px rgba(255,245,170,0.22),
-                3px 8px 20px rgba(0,0,0,0.6),
-                -2px 4px 12px rgba(0,0,0,0.35),
-                0 0 28px rgba(210,150,20,0.14);
+                inset -7px 0 14px rgba(0,0,0,0.38),
+                inset  4px 0  8px rgba(255,220,120,0.12),
+                inset  0 -4px 8px rgba(0,0,0,0.22),
+                4px 10px 24px rgba(0,0,0,0.7),
+                -2px 4px 12px rgba(0,0,0,0.4);
         }
 
-        /* Bright highlight streak — sells the cylinder */
+        /* Dim highlight streak — rougher, narrower */
         .candle-body::before {
             content: '';
             position: absolute;
-            top: 4px;
-            left: 15%;
-            width: 9%;
-            height: 80%;
+            top: 6px;
+            left: 14%;
+            width: 7%;
+            height: 70%;
             background: linear-gradient(to bottom,
-                rgba(255,248,200,0.65),
-                rgba(255,220,120,0.18) 65%,
+                rgba(255,235,160,0.45),
+                rgba(220,180,80,0.1) 60%,
                 transparent);
             border-radius: 50%;
-            filter: blur(1.5px);
+            filter: blur(2px);
         }
 
-        /* Wax drip — cream tone */
+        /* Layered wax texture streak on right side */
         .candle-body::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: var(--drip-l, 60%);
-            width: 6px;
-            height: var(--drip-h, 22px);
-            background: linear-gradient(to bottom, #faf0c0, #e0d090);
-            border-radius: 0 0 65% 65%;
-            opacity: 0.9;
+            top: 0; right: 18%;
+            width: 5%; height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 8px,
+                rgba(0,0,0,0.06) 8px,
+                rgba(0,0,0,0.06) 10px
+            );
+            border-radius: 50%;
+            filter: blur(0.5px);
         }
 
-        /* Candle holder / base */
+        /* Individual wax drip spans */
+        .c-drip {
+            position: absolute;
+            top: 0;
+            left: var(--dl, 55%);
+            width: var(--dw, 5px);
+            height: var(--dh, 18px);
+            background: linear-gradient(to bottom,
+                var(--wp, #d4b048),
+                var(--wh, #b8922e) 60%,
+                var(--wm, #8a6228));
+            border-radius: 0 0 60% 60%;
+            opacity: 0.82;
+        }
+
+        /* Dark taper variant */
+        .candle-dark { --we:#0e0906; --wm:#1c1208; --wh:#2a1a0c; --wc:#321e10; --wp:#381f10; }
+
+        /* Aged dingy cream variant */
+        .candle-cream { --we:#6a5230; --wm:#9e7838; --wh:#c09840; --wc:#ccaa48; --wp:#d2b050; }
+
+        /* Iron spike candlestick base */
         .candle-base {
-            width: calc(var(--cw, 22px) + 14px);
-            height: 9px;
-            background: linear-gradient(to right, #3a2c14, #6e5428 28%, #8a6c38 50%, #6e5428 72%, #3a2c14);
-            border-radius: 2px 2px 6px 6px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.6), 0 0 12px rgba(180,120,10,0.15);
+            width: calc(var(--cw, 22px) + 8px);
+            height: 8px;
+            background: linear-gradient(to right,
+                #0c0906 0%, #1e1610 25%, #2a1e12 50%, #1e1610 75%, #0c0906 100%);
+            border-radius: 1px 1px 4px 4px;
+            box-shadow:
+                0 5px 16px rgba(0,0,0,0.85),
+                inset 0 1px 0 rgba(120,90,40,0.18),
+                0 0 8px rgba(120,80,10,0.1);
+            position: relative;
+        }
+
+        /* Iron base spike detail */
+        .candle-base::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; left: 50%;
+            transform: translateX(-50%);
+            width: 40%; height: 3px;
+            background: #0a0806;
+            border-radius: 0 0 3px 3px;
         }
 
         @keyframes flicker {
@@ -1496,38 +1538,96 @@
         </div>
     </div>
 
-    <!-- Altar candles — bottom of screen, independent of logo centering -->
+    <!-- Altar candles — full width arch curving up toward enter button -->
     <div class="entry-candles" aria-hidden="true">
         <div class="candle-row">
 
-            <!-- Far left — shortest -->
-            <div class="candle" style="--cw:18px;--ch:70px;--dur:2.6s;--drip-l:58%;--drip-h:16px;--sway:5.8s;--rot-a:-2.2deg;--rot-b:0.4deg;">
+            <!-- 1 far left — thin dark taper -->
+            <div class="candle candle-dark" style="--cw:13px;--ch:52px;--dur:2.8s;--sway:6.2s;--rot-a:-2.8deg;--rot-b:-0.6deg;">
                 <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
-                <div class="candle-top-glow"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:30%;--dh:10px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
             </div>
 
-            <!-- Mid left -->
-            <div class="candle" style="--cw:24px;--ch:115px;--dur:2.2s;--drip-l:62%;--drip-h:26px;--sway:5.0s;--rot-a:-1.6deg;--rot-b:0.8deg;">
+            <!-- 2 outer left — aged cream, leans -->
+            <div class="candle candle-cream" style="--cw:17px;--ch:78px;--dur:2.4s;--sway:5.6s;--rot-a:-2.2deg;--rot-b:0.2deg;">
                 <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
-                <div class="candle-top-glow"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:62%;--dh:22px;--dw:5px"></span><span class="c-drip" style="--dl:28%;--dh:12px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
             </div>
 
-            <!-- Center — commanding, tallest -->
-            <div class="candle" style="--cw:34px;--ch:190px;--dur:1.7s;--drip-l:34%;--drip-h:42px;--sway:4.2s;--rot-a:-0.9deg;--rot-b:0.9deg;">
+            <!-- 3 mid-left — dark taper, taller -->
+            <div class="candle candle-dark" style="--cw:15px;--ch:108px;--dur:2.1s;--sway:5.1s;--rot-a:-1.8deg;--rot-b:0.5deg;">
                 <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
-                <div class="candle-top-glow"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:55%;--dh:18px;--dw:4px"></span><span class="c-drip" style="--dl:22%;--dh:8px;--dw:3px"></span></div>
+                <div class="candle-base"></div>
             </div>
 
-            <!-- Mid right -->
-            <div class="candle" style="--cw:26px;--ch:130px;--dur:2.0s;--drip-l:52%;--drip-h:30px;--sway:4.7s;--rot-a:-0.4deg;--rot-b:1.8deg;">
+            <!-- 4 left — thick aged pillar -->
+            <div class="candle candle-cream" style="--cw:24px;--ch:142px;--dur:2.3s;--sway:4.8s;--rot-a:-1.4deg;--rot-b:0.8deg;">
                 <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
-                <div class="candle-top-glow"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:68%;--dh:32px;--dw:6px"></span><span class="c-drip" style="--dl:35%;--dh:18px;--dw:5px"></span><span class="c-drip" style="--dl:18%;--dh:10px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
             </div>
 
-            <!-- Far right — short -->
-            <div class="candle" style="--cw:19px;--ch:82px;--dur:2.4s;--drip-l:48%;--drip-h:18px;--sway:5.4s;--rot-a:0.2deg;--rot-b:2.4deg;">
+            <!-- 5 inner left — near-black, tall -->
+            <div class="candle candle-dark" style="--cw:19px;--ch:170px;--dur:1.9s;--sway:4.5s;--rot-a:-1.0deg;--rot-b:1.0deg;">
                 <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
-                <div class="candle-top-glow"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:60%;--dh:38px;--dw:5px"></span><span class="c-drip" style="--dl:30%;--dh:20px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 6 CENTER — tallest, commanding aged pillar -->
+            <div class="candle candle-cream" style="--cw:30px;--ch:210px;--dur:1.7s;--sway:4.2s;--rot-a:-0.8deg;--rot-b:0.8deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:70%;--dh:50px;--dw:7px"></span><span class="c-drip" style="--dl:42%;--dh:30px;--dw:6px"></span><span class="c-drip" style="--dl:20%;--dh:15px;--dw:5px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 7 inner right — dark, tall -->
+            <div class="candle candle-dark" style="--cw:20px;--ch:178px;--dur:2.0s;--sway:4.6s;--rot-a:-0.9deg;--rot-b:1.1deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:58%;--dh:40px;--dw:5px"></span><span class="c-drip" style="--dl:25%;--dh:22px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 8 right — thick aged pillar -->
+            <div class="candle candle-cream" style="--cw:22px;--ch:148px;--dur:2.2s;--sway:4.9s;--rot-a:-0.5deg;--rot-b:1.5deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:65%;--dh:28px;--dw:6px"></span><span class="c-drip" style="--dl:38%;--dh:16px;--dw:5px"></span><span class="c-drip" style="--dl:82%;--dh:9px;--dw:3px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 9 mid-right — thin dark taper -->
+            <div class="candle candle-dark" style="--cw:15px;--ch:112px;--dur:2.5s;--sway:5.3s;--rot-a:0.3deg;--rot-b:2.0deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:50%;--dh:16px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 10 outer right — aged cream, leans -->
+            <div class="candle candle-cream" style="--cw:17px;--ch:74px;--dur:2.6s;--sway:5.7s;--rot-a:0.8deg;--rot-b:2.4deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:58%;--dh:20px;--dw:5px"></span><span class="c-drip" style="--dl:25%;--dh:11px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
+            </div>
+
+            <!-- 11 far right — thin dark taper -->
+            <div class="candle candle-dark" style="--cw:13px;--ch:55px;--dur:2.9s;--sway:6.4s;--rot-a:1.2deg;--rot-b:2.8deg;">
+                <div class="candle-flame-wrap"><div class="candle-smoke"></div><div class="candle-aura"></div><div class="candle-flame"></div></div>
+                <div class="candle-top-glow"></div><div class="candle-wick"></div>
+                <div class="candle-body"><span class="c-drip" style="--dl:40%;--dh:12px;--dw:4px"></span></div>
+                <div class="candle-base"></div>
             </div>
 
         </div>
