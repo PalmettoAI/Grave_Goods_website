@@ -111,13 +111,17 @@
         .entry-candles {
             position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;
+            left: 0;
+            right: 0;
             z-index: 12;
             pointer-events: none;
             opacity: 0;
-            animation: fadeUp 1s ease 3.2s forwards;
+            animation: candlesIn 1s ease 3.2s forwards;
+        }
+
+        @keyframes candlesIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
 
         /* ── DEPTH LAYER 1: breathing atmosphere ── */
